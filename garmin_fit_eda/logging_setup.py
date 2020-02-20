@@ -4,7 +4,7 @@ import yaml
 
 
 def setup_logging(
-    default_path: str = 'logging.yaml',
+    default_path: str = 'garmin_fit_eda/logging.yaml',
     default_level: int = logging.INFO,
     env_key: str = 'LOG_CFG'
 ):

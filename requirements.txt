@@ -1,0 +1,6 @@
+fitparse
+geopandas
+notebook
+jupyter
+descartes
+cpython
