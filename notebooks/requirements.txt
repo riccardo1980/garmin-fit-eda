@@ -1,0 +1,4 @@
+fitparse
+geopandas
+matplotlib
+pandas
