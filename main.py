@@ -1,16 +1,19 @@
 import argparse
 import logging
+import os
 
 from garmin_fit_eda.logging_setup import setup_logging
 from garmin_fit_eda.file_reader import (
     file_to_dataframe, read_fitparse
 )
 
-
 log = logging.getLogger(__name__)
 
 
 def app(input_file, **kwargs):
+    """
+    Main application
+    """
     if 'dump' in kwargs and kwargs['dump'] is True:
         df = file_to_dataframe(input_file)
         print(df[['timestamp', 'position_lat', 'position_long']].head())

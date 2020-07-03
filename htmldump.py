@@ -9,7 +9,9 @@ from garmin_fit_eda.file_reader import messages_to_dataframe
 log = logging.getLogger(__name__)
 
 
-def app(input_file, output_folder, dump_units=False):
+def fit_to_html(input_file,
+                output_folder,
+                dump_units=False):
     try:
         fitfile = fitparse.FitFile(input_file)
     except Exception as e:
@@ -30,26 +32,28 @@ if __name__ == "__main__":
     setup_logging()
     log.debug("Starting")
 
-    parser = argparse.ArgumentParser(description='read fit file')
-    parser.add_argument('input_file', metavar='file', type=str, nargs=1,
+    parser = argparse.ArgumentParser(description='Dump fit file to html')
+    parser.add_argument('input_file', metavar='file', type=str, nargs='+',
                         help='input fit file')
-
-    parser.add_argument('--output_folder', type=str,
-                        help='output folder')
 
     parser.add_argument('--dump_units', action='store_true')
 
+    parser.add_argument('--output_folder', default='./')
+
     args = parser.parse_args()
     args_dict = vars(args)
-    args_dict['input_file'] = args_dict['input_file'][0]
 
-    if args_dict['output_folder'] is None:
-        args_dict['output_folder'] = os.path.split(args_dict['input_file'])[1]
-
-    log.info(args_dict)
     try:
-        os.mkdir(args_dict['output_folder'])
-        app(**args_dict)
+        for input_file in args_dict['input_file']:
+
+            output_folder = os.path.join(
+                args_dict['output_folder'], os.path.split(input_file)[1])
+            os.makedirs(output_folder)
+
+            log.info('dumping {} in {}'.format(input_file, output_folder))
+
+            fit_to_html(input_file, output_folder,
+                        dump_units=args_dict['dump_units'])
     except Exception as e:
-        log.error(e)
+        log.error(e, exc_info=True)
         exit(-1)

@@ -1,6 +1,4 @@
 fitparse
-geopandas
-notebook
-jupyter
-descartes
+pandas
 cpython
+pyyaml
