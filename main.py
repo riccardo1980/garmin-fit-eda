@@ -9,7 +9,7 @@ from garmin_fit_eda.file_reader import (
 
 log = logging.getLogger(__name__)
 
-
+ 
 def app(input_file, **kwargs):
     """
     Main application
